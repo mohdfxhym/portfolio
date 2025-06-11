@@ -59,10 +59,59 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: showNavbar ? 1 : 0, y: showNavbar ? 0 : -20 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-4xl bg-black/20 dark:bg-white/10 backdrop-blur-xl rounded-full shadow-glass flex items-center justify-between px-4 md:px-6 py-2 border border-black/40 dark:border-white/20"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-4xl rounded-3xl shadow-glass flex items-center justify-between px-4 md:px-6 py-2 border overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
+          backdropFilter: "blur(20px)",
+          borderColor: "rgba(255,255,255,0.2)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1)"
+        }}
       >
+        {/* Animated background gradient */}
+        <motion.div
+          className="absolute inset-0 opacity-30"
+          animate={{
+            background: [
+              "linear-gradient(135deg, rgba(96,165,250,0.1), rgba(167,139,250,0.1))",
+              "linear-gradient(225deg, rgba(167,139,250,0.1), rgba(244,114,182,0.1))",
+              "linear-gradient(315deg, rgba(244,114,182,0.1), rgba(96,165,250,0.1))",
+              "linear-gradient(135deg, rgba(96,165,250,0.1), rgba(167,139,250,0.1))"
+            ]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+
+        {/* Floating particles in navbar */}
+        <div className="absolute inset-0 overflow-hidden rounded-3xl">
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/20 rounded-full"
+              style={{
+                left: `${15 + i * 20}%`,
+                top: `${20 + (i % 2) * 60}%`,
+              }}
+              animate={{
+                y: [-5, -15, -5],
+                opacity: [0.2, 0.6, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + i * 0.5,
+                repeat: Infinity,
+                delay: i * 0.3,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+
         {/* Enhanced Siri-style orb for mobile menu */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center relative z-10">
           <button
             className="flex items-center justify-center p-1 focus:outline-none"
             onClick={async () => {
@@ -192,25 +241,63 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Nav links */}
-        <ul className="hidden md:flex gap-2 sm:gap-4 md:gap-6 mx-auto">
+        {/* Nav links with liquid glass hover effects */}
+        <ul className="hidden md:flex gap-2 sm:gap-4 md:gap-6 mx-auto relative z-10">
           {navLinks.map(link => (
             <li key={link.name}>
               <motion.a
                 href={link.href}
-                className="text-appleBlack/80 dark:text-white/80 hover:text-appleBlue dark:hover:text-appleBlue font-medium transition-colors px-2 py-1"
-                whileHover={{ scale: 1.15, y: -10 }}
-                whileTap={{ scale: 0.92, y: -4 }}
+                className="relative text-appleBlack/80 dark:text-white/80 hover:text-appleBlue dark:hover:text-appleBlue font-medium transition-colors px-3 py-2 rounded-2xl overflow-hidden group"
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -2,
+                  boxShadow: "0 8px 25px rgba(0,0,0,0.1)"
+                }}
+                whileTap={{ scale: 0.95, y: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 18 }}
                 onClick={() => setMenuOpen(false)}
               >
-                {link.name}
+                {/* Liquid glass hover background */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255,255,255,0.3)",
+                  }}
+                />
+                
+                {/* Floating micro-particles on hover */}
+                <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-0.5 h-0.5 bg-white/60 rounded-full"
+                      style={{
+                        left: `${30 + i * 20}%`,
+                        top: `${40 + (i % 2) * 20}%`,
+                      }}
+                      animate={{
+                        y: [-3, -8, -3],
+                        opacity: [0.3, 0.8, 0.3],
+                      }}
+                      transition={{
+                        duration: 1.5 + i * 0.2,
+                        repeat: Infinity,
+                        delay: i * 0.1,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  ))}
+                </div>
+                
+                <span className="relative z-10">{link.name}</span>
               </motion.a>
             </li>
           ))}
         </ul>
 
-        {/* Enhanced Mobile menu with rectangular design */}
+        {/* Enhanced Mobile menu with liquid glass */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -235,9 +322,10 @@ export default function Navbar() {
                 damping: 25,
                 duration: 0.4
               }}
-              className="absolute top-20 left-1/2 -translate-x-1/2 w-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-2xl shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center py-8"
+              className="absolute top-20 left-1/2 -translate-x-1/2 w-80 rounded-3xl shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center py-8 overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
+                backdropFilter: "blur(20px)",
                 boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(96,165,250,0.2)',
               }}
             >
@@ -256,7 +344,7 @@ export default function Navbar() {
                   >
                     <motion.a
                       href={link.href}
-                      className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
+                      className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-3xl relative overflow-hidden"
                       whileHover={{ 
                         scale: 1.05,
                         backgroundColor: 'rgba(96,165,250,0.2)',
@@ -267,7 +355,7 @@ export default function Navbar() {
                       onClick={() => setMenuOpen(false)}
                     >
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-full"
+                        className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-3xl"
                         initial={{ x: '-100%' }}
                         whileHover={{ x: '100%' }}
                         transition={{ duration: 0.6 }}
@@ -281,8 +369,8 @@ export default function Navbar() {
           )}
         </AnimatePresence>
 
-        {/* Dark mode toggle - only visible on desktop */}
-        <div className="hidden md:block">
+        {/* Dark mode toggle with liquid glass effect */}
+        <div className="hidden md:block relative z-10">
           <DarkModeToggle />
         </div>
         

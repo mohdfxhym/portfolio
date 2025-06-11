@@ -195,7 +195,7 @@ export default function HeroSection() {
             <span className="relative z-10 text-black dark:text-white">View My Work</span>
           </motion.a>
 
-          {/* Get In Touch Button - Liquid Glass */}
+          {/* Get In Touch Button - Same Liquid Glass Effect */}
           <motion.a
             href="#contact"
             whileHover={{ 
@@ -205,54 +205,58 @@ export default function HeroSection() {
             whileTap={{ scale: 0.97 }}
             className="group relative inline-block px-8 py-4 font-semibold text-lg rounded-3xl overflow-hidden transition-all duration-300"
             style={{
-              background: "linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02))",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
               backdropFilter: "blur(20px)",
-              border: "1px solid rgba(0,0,0,0.1)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.1)"
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1)"
             }}
           >
-            {/* Liquid ripple effect */}
+            {/* Liquid effect background - Same as View My Work */}
             <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100"
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               style={{
-                background: "radial-gradient(circle at center, rgba(96,165,250,0.2) 0%, transparent 70%)",
+                background: "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
                 borderRadius: "24px",
               }}
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0, 0.5, 0],
+                background: [
+                  "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
+                  "linear-gradient(225deg, rgba(167,139,250,0.3), rgba(244,114,182,0.3))",
+                  "linear-gradient(315deg, rgba(244,114,182,0.3), rgba(96,165,250,0.3))",
+                  "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))"
+                ]
               }}
               transition={{
-                duration: 2,
+                duration: 3,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
             />
             
-            {/* Morphing border */}
-            <motion.div
-              className="absolute inset-0 rounded-3xl"
-              style={{
-                background: "linear-gradient(45deg, transparent, rgba(96,165,250,0.3), transparent)",
-                padding: "1px",
-              }}
-              animate={{
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            >
-              <div 
-                className="w-full h-full rounded-3xl"
-                style={{
-                  background: "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
-                  backdropFilter: "blur(20px)",
-                }}
-              />
-            </motion.div>
+            {/* Floating particles - Same as View My Work */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white/40 rounded-full"
+                  style={{
+                    left: `${20 + i * 10}%`,
+                    top: `${30 + (i % 2) * 40}%`,
+                  }}
+                  animate={{
+                    y: [-10, -20, -10],
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2 + i * 0.3,
+                    repeat: Infinity,
+                    delay: i * 0.2,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
             
             <span className="relative z-10 text-black dark:text-white">Get In Touch</span>
           </motion.a>
