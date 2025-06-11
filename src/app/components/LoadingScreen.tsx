@@ -198,12 +198,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
-                      className="relative w-32 h-32 rounded-full overflow-hidden border-3 border-white/20 mx-auto bg-gradient-to-br from-gray-100 to-gray-200"
+                      className="relative w-32 h-32 mx-auto"
                     >
                       <img
                         src="/images/memoji.png"
                         alt="Mohammed Faheem Memoji"
-                        className="w-full h-full object-cover scale-110 -translate-y-2"
+                        className="w-full h-full object-contain scale-110 -translate-y-2"
                       />
                       
                       {/* Online indicator - Properly positioned */}
