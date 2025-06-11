@@ -8,7 +8,14 @@ const stats = [
   { number: 100, label: "Client Satisfaction", suffix: "%" }
 ];
 
-function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2 }) {
+interface AnimatedCounterProps {
+  target: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+}
+
+function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -16,7 +23,7 @@ function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2 }) {
   useEffect(() => {
     if (isInView) {
       let startTime = null;
-      const animate = (currentTime) => {
+      const animate = (currentTime: number) => {
         if (startTime === null) startTime = currentTime;
         const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
         
