@@ -21,8 +21,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Ensure clean static export
-  distDir: '.next',
+  // Set output directory to 'out' for GitHub Pages deployment
+  distDir: 'out',
 };
 
 export default nextConfig;
