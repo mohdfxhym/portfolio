@@ -178,13 +178,13 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Enhanced Mobile menu with circular design */}
+      {/* Clean Mobile menu without circular background */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ 
               opacity: 0, 
-              scale: 0.3,
+              scale: 0.9,
               y: -20,
             }}
             animate={{ 
@@ -194,7 +194,7 @@ export default function Navbar() {
             }}
             exit={{ 
               opacity: 0, 
-              scale: 0.3,
+              scale: 0.9,
               y: -20,
             }}
             transition={{
@@ -203,13 +203,9 @@ export default function Navbar() {
               damping: 25,
               duration: 0.4
             }}
-            className="absolute top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-full shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center"
-            style={{
-              background: 'radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(96,165,250,0.2)',
-            }}
+            className="absolute top-20 left-1/2 -translate-x-1/2 w-[90vw] bg-black/90 dark:bg-white/10 backdrop-blur-xl rounded-2xl shadow-glass z-50 md:hidden border border-black/40 dark:border-white/20 py-6"
           >
-            <ul className="flex flex-col items-center justify-center gap-3 p-8">
+            <ul className="flex flex-col items-center gap-3">
               {navLinks.map((link, index) => (
                 <motion.li 
                   key={link.name}
@@ -224,11 +220,10 @@ export default function Navbar() {
                 >
                   <motion.a
                     href={link.href}
-                    className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
+                    className="block w-full text-center text-white dark:text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
                     whileHover={{ 
-                      scale: 1.1,
-                      backgroundColor: 'rgba(96,165,250,0.2)',
-                      boxShadow: '0 0 20px rgba(96,165,250,0.3)',
+                      scale: 1.05,
+                      y: -2,
                     }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 18 }}
