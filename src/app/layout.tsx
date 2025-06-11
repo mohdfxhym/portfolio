@@ -3,11 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import ScrollIndicator from "./components/ScrollIndicator";
+import AppleCursor from "./components/AppleCursor";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Your Name | Creative Developer",
+  title: "Mohammed Faheem | Creative Developer",
   description: "Personal portfolio inspired by Apple design.",
 };
 
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans antialiased bg-appleGray text-appleBlack`}>
+        <AppleCursor />
         <ScrollIndicator />
         <Navbar />
         {children}
