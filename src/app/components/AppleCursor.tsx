@@ -3,16 +3,14 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function AppleCursor() {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const [cursorText, setCursorText] = useState("");
-  const [cursorVariant, setCursorVariant] = useState("default");
   const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [cursorState, setCursorState] = useState("default");
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  const springConfig = { damping: 25, stiffness: 700 };
+  const springConfig = { damping: 30, stiffness: 800 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -25,230 +23,161 @@ export default function AppleCursor() {
     if (!mounted) return;
 
     const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
       setIsVisible(true);
     };
 
     const handleMouseEnter = () => setIsVisible(true);
     const handleMouseLeave = () => setIsVisible(false);
 
-    // Handle different cursor states
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       
-      // Check for interactive elements
-      if (target.matches('a, button, [role="button"], input, textarea, select')) {
-        setIsHovering(true);
-        setCursorVariant("pointer");
-        
-        // Special text for specific elements
-        if (target.matches('a[href^="#"]')) {
-          setCursorText("Navigate");
-        } else if (target.matches('button, [role="button"]')) {
-          setCursorText("Click");
-        } else if (target.matches('input, textarea')) {
-          setCursorText("Type");
-        } else {
-          setCursorText("Interact");
-        }
-      } 
-      // Check for images
-      else if (target.matches('img, video')) {
-        setIsHovering(true);
-        setCursorVariant("view");
-        setCursorText("View");
+      if (target.matches('a, button, [role="button"]')) {
+        setCursorState("hover");
+      } else if (target.matches('input, textarea')) {
+        setCursorState("text");
+      } else {
+        setCursorState("default");
       }
-      // Check for text elements
-      else if (target.matches('h1, h2, h3, h4, h5, h6, p, span, div')) {
-        const hasText = target.textContent && target.textContent.trim().length > 0;
-        if (hasText) {
-          setIsHovering(true);
-          setCursorVariant("text");
-          setCursorText("Read");
-        }
-      }
-      // Default state
-      else {
-        setIsHovering(false);
-        setCursorVariant("default");
-        setCursorText("");
-      }
-    };
-
-    const handleMouseOut = () => {
-      setIsHovering(false);
-      setCursorVariant("default");
-      setCursorText("");
     };
 
     window.addEventListener("mousemove", moveCursor);
     window.addEventListener("mouseenter", handleMouseEnter);
     window.addEventListener("mouseleave", handleMouseLeave);
     document.addEventListener("mouseover", handleMouseOver);
-    document.addEventListener("mouseout", handleMouseOut);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mouseenter", handleMouseEnter);
       window.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseover", handleMouseOver);
-      document.removeEventListener("mouseout", handleMouseOut);
     };
   }, [cursorX, cursorY, mounted]);
 
-  const variants = {
-    default: {
-      scale: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.8)",
-      border: "2px solid rgba(255, 255, 255, 0.3)",
-      width: 32,
-      height: 32,
-    },
-    pointer: {
-      scale: 1.5,
-      backgroundColor: "rgba(0, 113, 227, 0.9)",
-      border: "2px solid rgba(255, 255, 255, 0.8)",
-      width: 32,
-      height: 32,
-    },
-    text: {
-      scale: 1.2,
-      backgroundColor: "rgba(0, 0, 0, 0.6)",
-      border: "2px solid rgba(0, 113, 227, 0.6)",
-      width: 32,
-      height: 32,
-    },
-    view: {
-      scale: 2,
-      backgroundColor: "rgba(0, 0, 0, 0.4)",
-      border: "2px solid rgba(255, 255, 255, 0.6)",
-      width: 32,
-      height: 32,
-    },
-  };
-
-  // Don't render on server or until mounted
   if (!mounted) return null;
 
   return (
     <>
       {/* Hide default cursor */}
       <style jsx global>{`
-        html, body, * {
-          cursor: none !important;
-        }
-        
-        a, button, [role="button"], input, textarea, select {
+        * {
           cursor: none !important;
         }
       `}</style>
 
-      {/* Custom cursor */}
+      {/* Magnetic cursor with morphing blob */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        className="fixed pointer-events-none z-[9999] mix-blend-difference"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          left: cursorXSpring,
+          top: cursorYSpring,
+          x: "-50%",
+          y: "-50%",
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: isVisible ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       >
-        {/* Main cursor dot */}
+        {/* Main morphing blob */}
         <motion.div
-          className="rounded-full backdrop-blur-sm shadow-lg"
-          animate={cursorVariant}
-          variants={variants}
+          className="relative"
+          animate={{
+            scale: cursorState === "hover" ? 2.5 : cursorState === "text" ? 0.3 : 1,
+            rotate: cursorState === "hover" ? [0, 180, 360] : 0,
+          }}
           transition={{
             type: "spring",
-            stiffness: 500,
-            damping: 28,
-          }}
-          style={{
-            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-          }}
-        />
-
-        {/* Cursor text */}
-        {cursorText && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 10 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap"
-          >
-            <div className="px-3 py-1 bg-black/90 dark:bg-white/90 text-white dark:text-black text-sm font-medium rounded-full backdrop-blur-md border border-white/20 dark:border-black/20 shadow-lg">
-              {cursorText}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Trailing dots for movement effect */}
-        <motion.div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-          animate={{
-            scale: isHovering ? [1, 1.2, 1] : 1,
-          }}
-          transition={{
-            duration: 1,
-            repeat: isHovering ? Infinity : 0,
-            ease: "easeInOut",
+            stiffness: 400,
+            damping: 25,
+            rotate: {
+              duration: 2,
+              repeat: cursorState === "hover" ? Infinity : 0,
+              ease: "linear"
+            }
           }}
         >
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-white/30 dark:bg-black/30"
-              style={{
-                width: 8 - i * 2,
-                height: 8 - i * 2,
-                top: `${-4 + i}px`,
-                left: `${-4 + i}px`,
-              }}
-              animate={{
-                scale: isHovering ? [1, 0.8, 1] : 0.8,
-                opacity: isHovering ? [0.6, 0.3, 0.6] : 0.3,
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: isHovering ? Infinity : 0,
-                delay: i * 0.1,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </motion.div>
-      </motion.div>
+          {/* Organic blob shape */}
+          <motion.div
+            className="w-6 h-6 bg-white rounded-full"
+            animate={{
+              borderRadius: cursorState === "hover" 
+                ? ["50%", "60% 40% 30% 70%", "40% 60% 70% 30%", "50%"]
+                : cursorState === "text"
+                ? "2px"
+                : "50%",
+              scaleX: cursorState === "text" ? 3 : 1,
+              scaleY: cursorState === "text" ? 0.3 : 1,
+            }}
+            transition={{
+              borderRadius: {
+                duration: 3,
+                repeat: cursorState === "hover" ? Infinity : 0,
+                ease: "easeInOut"
+              },
+              scale: {
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }
+            }}
+            style={{
+              filter: "blur(0.5px)",
+              boxShadow: "0 0 20px rgba(255, 255, 255, 0.8)"
+            }}
+          />
 
-      {/* Cursor glow effect */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998]"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.2 }}
-      >
-        <motion.div
-          className="w-16 h-16 rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(0,113,227,0.15) 0%, transparent 70%)",
-            transform: "translate(-50%, -50%)",
-          }}
-          animate={{
-            scale: isHovering ? [1, 1.5, 1] : 1,
-            opacity: isHovering ? [0.4, 0.7, 0.4] : 0.3,
-          }}
-          transition={{
-            duration: 2,
-            repeat: isHovering ? Infinity : 0,
-            ease: "easeInOut",
-          }}
-        />
+          {/* Trailing particles */}
+          {cursorState === "hover" && (
+            <>
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white rounded-full"
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                  }}
+                  animate={{
+                    x: [0, Math.cos(i * 60 * Math.PI / 180) * 20],
+                    y: [0, Math.sin(i * 60 * Math.PI / 180) * 20],
+                    scale: [0, 1, 0],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.1,
+                    ease: "easeOut"
+                  }}
+                />
+              ))}
+            </>
+          )}
+        </motion.div>
+
+        {/* Outer ring for hover state */}
+        {cursorState === "hover" && (
+          <motion.div
+            className="absolute inset-0 border border-white rounded-full"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: 3,
+              opacity: [0, 0.5, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeOut"
+            }}
+            style={{
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)"
+            }}
+          />
+        )}
       </motion.div>
     </>
   );

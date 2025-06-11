@@ -122,28 +122,139 @@ export default function HeroSection() {
           </p>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons with Liquid Glass Effect */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4"
         >
+          {/* View My Work Button - Liquid Glass */}
           <motion.a
             href="#projects"
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(0,0,0,0.9)" }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)"
+            }}
             whileTap={{ scale: 0.97 }}
-            className="inline-block px-8 py-4 bg-black dark:bg-white text-white dark:text-black font-semibold text-lg rounded-none border-2 border-black dark:border-white transition-all duration-200 hover:shadow-lg"
+            className="group relative inline-block px-8 py-4 font-semibold text-lg rounded-3xl overflow-hidden transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1)"
+            }}
           >
-            View My Work
+            {/* Liquid effect background */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
+                borderRadius: "24px",
+              }}
+              animate={{
+                background: [
+                  "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
+                  "linear-gradient(225deg, rgba(167,139,250,0.3), rgba(244,114,182,0.3))",
+                  "linear-gradient(315deg, rgba(244,114,182,0.3), rgba(96,165,250,0.3))",
+                  "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))"
+                ]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            {/* Floating particles */}
+            <div className="absolute inset-0 overflow-hidden rounded-3xl">
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-white/40 rounded-full"
+                  style={{
+                    left: `${20 + i * 10}%`,
+                    top: `${30 + (i % 2) * 40}%`,
+                  }}
+                  animate={{
+                    y: [-10, -20, -10],
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 2 + i * 0.3,
+                    repeat: Infinity,
+                    delay: i * 0.2,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+            
+            <span className="relative z-10 text-black dark:text-white">View My Work</span>
           </motion.a>
+
+          {/* Get In Touch Button - Liquid Glass */}
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.05, backgroundColor: "rgba(0,0,0,0.05)" }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 20px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.2)"
+            }}
             whileTap={{ scale: 0.97 }}
-            className="inline-block px-8 py-4 bg-transparent text-black dark:text-white font-semibold text-lg rounded-none border-2 border-black dark:border-white transition-all duration-200 hover:shadow-lg"
+            className="group relative inline-block px-8 py-4 font-semibold text-lg rounded-3xl overflow-hidden transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(0,0,0,0.05), rgba(0,0,0,0.02))",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(0,0,0,0.1)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.1)"
+            }}
           >
-            Get In Touch
+            {/* Liquid ripple effect */}
+            <motion.div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100"
+              style={{
+                background: "radial-gradient(circle at center, rgba(96,165,250,0.2) 0%, transparent 70%)",
+                borderRadius: "24px",
+              }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            {/* Morphing border */}
+            <motion.div
+              className="absolute inset-0 rounded-3xl"
+              style={{
+                background: "linear-gradient(45deg, transparent, rgba(96,165,250,0.3), transparent)",
+                padding: "1px",
+              }}
+              animate={{
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <div 
+                className="w-full h-full rounded-3xl"
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))",
+                  backdropFilter: "blur(20px)",
+                }}
+              />
+            </motion.div>
+            
+            <span className="relative z-10 text-black dark:text-white">Get In Touch</span>
           </motion.a>
         </motion.div>
       </div>
