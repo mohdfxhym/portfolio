@@ -54,8 +54,8 @@ export default function ContactSection() {
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-8 bg-gradient-to-b from-black to-gray-700 dark:from-white dark:to-gray-300 text-transparent bg-clip-text">
-        <span className="bg-gradient-to-r from-black via-gray-800 to-white dark:from-white dark:via-gray-300 dark:to-gray-500 text-transparent bg-clip-text">Contact</span>
+      <h2 className="text-3xl md:text-4xl font-bold mb-8 text-black dark:text-white">
+        Contact
       </h2>
       
       <motion.form

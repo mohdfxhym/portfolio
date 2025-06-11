@@ -29,8 +29,8 @@ export default function AboutSection() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
       >
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-b from-black to-gray-700 dark:from-white dark:to-gray-300 text-transparent bg-clip-text">
-          <span className="bg-gradient-to-r from-black via-gray-800 to-white dark:from-white dark:via-gray-300 dark:to-gray-500 text-transparent bg-clip-text">About Me</span>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black dark:text-white">
+          About Me
         </h2>
         <p className="text-lg text-appleBlack/80 mb-2">
           Hi! I'm Mohammed Faheem, a passionate developer and designer who loves building beautiful, functional digital experiences. My work blends code, creativity, and a relentless pursuit of quality.
@@ -41,4 +41,4 @@ export default function AboutSection() {
       </motion.div>
     </motion.section>
   );
-} 
+}

@@ -32,8 +32,8 @@ export default function ProjectsSection() {
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
-      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center bg-gradient-to-b from-black to-gray-700 dark:from-white dark:to-gray-300 text-transparent bg-clip-text">
-        <span className="bg-gradient-to-r from-black via-gray-800 to-white dark:from-white dark:via-gray-300 dark:to-gray-500 text-transparent bg-clip-text">🚀 Featured Projects</span>
+      <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-black dark:text-white">
+        Featured Projects
       </h2>
       <div className="grid gap-8 md:grid-cols-3">
         {projects.map((project, idx) => (
@@ -66,4 +66,4 @@ export default function ProjectsSection() {
       </div>
     </motion.section>
   );
-} 
+}
