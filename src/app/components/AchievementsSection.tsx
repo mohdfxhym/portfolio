@@ -54,7 +54,7 @@ export default function AchievementsSection() {
         </motion.li>
       </motion.ol>
 
-      {/* MacBook Video Frame */}
+      {/* macOS Window Frame */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -62,48 +62,81 @@ export default function AchievementsSection() {
         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
         className="relative mx-auto max-w-4xl"
       >
-        {/* MacBook Frame */}
-        <div className="relative">
-          {/* MacBook Screen */}
-          <div className="relative bg-black rounded-t-2xl p-2 shadow-2xl">
-            {/* Screen Bezel */}
-            <div className="bg-gray-900 rounded-t-xl p-4 relative overflow-hidden">
-              {/* Camera */}
-              <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-700 rounded-full"></div>
+        {/* Window Container */}
+        <div className="relative bg-white dark:bg-gray-900 rounded-lg shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+          {/* Window Title Bar */}
+          <div className="flex items-center justify-between bg-gray-100 dark:bg-gray-800 px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+            {/* Traffic Light Buttons */}
+            <div className="flex items-center space-x-2">
+              <motion.button
+                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Close window"
+              />
+              <motion.button
+                className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Minimize window"
+              />
+              <motion.button
+                className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Maximize window"
+              />
+            </div>
+            
+            {/* Window Title */}
+            <div className="flex-1 text-center">
+              <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Samsung Solve for Tomorrow - Top 50 Global
+              </h3>
+            </div>
+            
+            {/* Window Controls Spacer */}
+            <div className="w-16"></div>
+          </div>
+          
+          {/* Video Player Area */}
+          <div className="relative bg-black">
+            {/* Video Container */}
+            <div className="relative aspect-video overflow-hidden">
+              <video
+                src="/images/solve-for-tomorrow-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+                style={{ filter: 'brightness(0.95) contrast(1.05)' }}
+              />
               
-              {/* Video Container */}
-              <div className="relative bg-black rounded-lg overflow-hidden aspect-video">
-                <video
-                  src="/images/solve-for-tomorrow-video.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover"
-                  style={{ filter: 'brightness(0.95) contrast(1.1)' }}
-                />
-                
-                {/* Screen Reflection Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none"></div>
+              {/* Video Overlay Controls (Optional) */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 hover:opacity-100 transition-opacity duration-300">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                  <div className="text-white text-xs font-medium">Playing</div>
+                </div>
+                <div className="text-white text-xs">
+                  Samsung Innovation Showcase
+                </div>
               </div>
             </div>
           </div>
           
-          {/* MacBook Base */}
-          <div className="relative">
-            {/* Keyboard Area */}
-            <div className="bg-gradient-to-b from-gray-300 to-gray-400 dark:from-gray-700 dark:to-gray-800 rounded-b-2xl px-4 py-3 shadow-lg">
-              {/* Trackpad */}
-              <div className="mx-auto w-24 h-16 bg-gray-200 dark:bg-gray-600 rounded-lg shadow-inner mt-2"></div>
+          {/* Window Bottom Bar (Optional) */}
+          <div className="bg-gray-50 dark:bg-gray-800 px-4 py-2 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>Video Player</span>
+              <span>1080p • Auto-playing</span>
             </div>
-            
-            {/* MacBook Hinge */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gray-400 via-gray-500 to-gray-400 dark:from-gray-600 dark:via-gray-700 dark:to-gray-600"></div>
           </div>
-          
-          {/* Ambient Lighting */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl -z-10"></div>
         </div>
+        
+        {/* Window Shadow and Glow Effect */}
+        <div className="absolute -inset-4 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl blur-xl -z-10"></div>
       </motion.div>
 
       {/* Featured Article Link */}
