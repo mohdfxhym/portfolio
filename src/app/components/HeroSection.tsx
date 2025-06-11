@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const ballVariants = {
   animate: {
@@ -13,15 +14,62 @@ const ballVariants = {
   },
 };
 
+const greetings = [
+  "Hello",
+  "Hola", 
+  "Bonjour",
+  "Hallo",
+  "Ciao",
+  "こんにちは",
+  "안녕하세요",
+  "Привет",
+  "مرحبا",
+  "नमस्ते",
+  "你好",
+  "Olá"
+];
+
 export default function HeroSection() {
+  const [currentGreeting, setCurrentGreeting] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentGreeting((prev) => (prev + 1) % greetings.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <motion.section
-      className="w-full min-h-screen flex flex-col justify-center items-start text-left relative overflow-hidden px-4 md:px-8 lg:px-16 max-w-7xl mx-auto"
+      className="w-full min-h-screen flex flex-col justify-center items-start text-left relative overflow-hidden px-4 md:px-8 lg:px-16 max-w-7xl mx-auto pt-24 md:pt-16"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <div className="z-10 flex flex-col items-start w-full">
+        {/* Animated Hello in multiple languages */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mb-6 md:mb-8 h-12 flex items-center"
+        >
+          <motion.h2
+            key={currentGreeting}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 1.1 }}
+            transition={{ 
+              duration: 0.6,
+              ease: "easeOut"
+            }}
+            className="text-xl md:text-2xl font-medium text-black dark:text-white"
+          >
+            {greetings[currentGreeting]}
+          </motion.h2>
+        </motion.div>
+
         {/* Main heading with large typography */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -45,7 +93,7 @@ export default function HeroSection() {
               for Digital
             </motion.span>
             <motion.span
-              className="block"
+              className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text"
               whileHover={{ x: 15 }}
               transition={{ type: 'spring', stiffness: 300, damping: 18 }}
             >
@@ -54,30 +102,29 @@ export default function HeroSection() {
           </h1>
         </motion.div>
 
-        {/* Subtitle section */}
+        {/* Description */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-8 md:mb-12 max-w-2xl"
         >
-          <h2 className="text-xl md:text-2xl font-medium mb-4 text-black dark:text-white">
-            Hello
-          </h2>
           <p className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300">
             I transform complex challenges into elegant digital experiences that drive results—whether you're a startup or an established business looking to innovate.
           </p>
         </motion.div>
 
-        {/* Name and role */}
+        {/* Name and role with gradient */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-12"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-black dark:text-white mb-2">
-            Mohammed Faheem
+          <h3 className="text-2xl md:text-3xl font-bold mb-2">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text">
+              Mohammed Faheem
+            </span>
           </h3>
           <p className="text-lg text-gray-600 dark:text-gray-400">
             Designer & Developer
