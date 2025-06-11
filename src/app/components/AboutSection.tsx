@@ -33,7 +33,7 @@ export default function AboutSection() {
           About Me
         </h2>
         <p className="text-lg text-appleBlack/80 mb-2">
-          Hi! I'm Mohammed Faheem, a passionate developer and designer who loves building beautiful, functional digital experiences. My work blends code, creativity, and a relentless pursuit of quality.
+          Hi! I&apos;m Mohammed Faheem, a passionate developer and designer who loves building beautiful, functional digital experiences. My work blends code, creativity, and a relentless pursuit of quality.
         </p>
         <p className="text-md text-gray-600">
           I thrive on challenges, enjoy learning new tools, and believe in the power of design to inspire and connect.

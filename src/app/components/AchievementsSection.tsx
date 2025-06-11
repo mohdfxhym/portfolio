@@ -33,7 +33,7 @@ export default function AchievementsSection() {
         >
           <span className="font-semibold">Top 50 Globally – Samsung Solve for Tomorrow</span>
           <p className="ml-4 text-gray-700 dark:text-gray-300">
-            Ranked among the top 50 teams globally in Samsung's <span className="font-semibold">Solve for Tomorrow</span>, a STEM innovation contest.
+            Ranked among the top 50 teams globally in Samsung&apos;s <span className="font-semibold">Solve for Tomorrow</span>, a STEM innovation contest.
           </p>
         </motion.li>
         <motion.li
@@ -154,7 +154,7 @@ export default function AchievementsSection() {
           rel="noopener noreferrer"
           className="inline-block text-appleBlue underline hover:text-appleBlack dark:hover:text-white transition-colors"
         >
-          News18: Samsung Solve for Tomorrow Competition's Top 50 Shortlisted Entries Highlight Innovative Solutions in Healthcare
+          News18: Samsung Solve for Tomorrow Competition&apos;s Top 50 Shortlisted Entries Highlight Innovative Solutions in Healthcare
         </a>
       </motion.div>
     </motion.section>

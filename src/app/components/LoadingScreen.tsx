@@ -297,7 +297,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
               fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
-            "I love the white" - Every designer copying Apple 🍎
+            &quot;I love the white&quot; - Every designer copying Apple 🍎
           </p>
         </motion.div>
 
