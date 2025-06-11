@@ -178,7 +178,7 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Enhanced Mobile menu with circular design */}
+      {/* Enhanced Mobile menu with rectangular design */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -203,13 +203,13 @@ export default function Navbar() {
               damping: 25,
               duration: 0.4
             }}
-            className="absolute top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-full shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center"
+            className="absolute top-20 left-1/2 -translate-x-1/2 w-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-2xl shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center py-8"
             style={{
-              background: 'radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
               boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(96,165,250,0.2)',
             }}
           >
-            <ul className="flex flex-col items-center justify-center gap-3 p-8">
+            <ul className="flex flex-col items-center justify-center gap-3 p-4 w-full">
               {navLinks.map((link, index) => (
                 <motion.li 
                   key={link.name}
@@ -226,7 +226,7 @@ export default function Navbar() {
                     href={link.href}
                     className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
                     whileHover={{ 
-                      scale: 1.1,
+                      scale: 1.05,
                       backgroundColor: 'rgba(96,165,250,0.2)',
                       boxShadow: '0 0 20px rgba(96,165,250,0.3)',
                     }}
