@@ -204,6 +204,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                         src="/images/memoji.png"
                         alt="Mohammed Faheem Memoji"
                         className="w-full h-full object-contain scale-110 -translate-y-2"
+                        style={{
+                          filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.3))"
+                        }}
                       />
                       
                       {/* Online indicator - Properly positioned */}

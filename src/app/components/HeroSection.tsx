@@ -46,22 +46,34 @@ export default function HeroSection() {
   return (
     <motion.section
       className="w-full min-h-screen flex flex-col justify-center items-start text-left relative overflow-hidden px-4 md:px-8 lg:px-16 max-w-7xl mx-auto pt-24 md:pt-16"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: 'easeOut' }}
+      initial={{ 
+        opacity: 0, 
+        y: 40,
+        filter: "blur(20px)"
+      }}
+      animate={{ 
+        opacity: 1, 
+        y: 0,
+        filter: "blur(0px)"
+      }}
+      transition={{ 
+        duration: 1.2, 
+        ease: 'easeOut',
+        delay: 0.3
+      }}
     >
       <div className="z-10 flex flex-col items-start w-full">
         {/* Animated Hello in multiple languages */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.5 }}
           className="mb-6 md:mb-8 h-12 flex items-center"
         >
           <motion.h2
             key={currentGreeting}
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            initial={{ opacity: 0, y: 20, scale: 0.9, filter: "blur(5px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: -20, scale: 1.1 }}
             transition={{ 
               duration: 0.6,
@@ -75,9 +87,9 @@ export default function HeroSection() {
 
         {/* Main heading - Your Name with gradient */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(15px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8, delay: 0.7 }}
           className="mb-8 md:mb-12"
         >
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight">
@@ -100,9 +112,9 @@ export default function HeroSection() {
 
         {/* Role/Title */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, delay: 0.9 }}
           className="mb-8 md:mb-12"
         >
           <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white">
@@ -112,9 +124,9 @@ export default function HeroSection() {
 
         {/* Description */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, delay: 1.1 }}
           className="mb-12 max-w-2xl"
         >
           <p className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300">
@@ -124,9 +136,9 @@ export default function HeroSection() {
 
         {/* CTA Buttons with Liquid Glass Effect */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.6, delay: 1.3 }}
           className="flex flex-col sm:flex-row gap-4"
         >
           {/* View My Work Button - Liquid Glass */}
@@ -147,10 +159,9 @@ export default function HeroSection() {
           >
             {/* Liquid effect background */}
             <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
               style={{
                 background: "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
-                borderRadius: "24px",
               }}
               animate={{
                 background: [
@@ -213,10 +224,9 @@ export default function HeroSection() {
           >
             {/* Liquid effect background - Same as View My Work */}
             <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"
               style={{
                 background: "linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3))",
-                borderRadius: "24px",
               }}
               animate={{
                 background: [
@@ -283,9 +293,9 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.2 }}
+        initial={{ opacity: 0, filter: "blur(5px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.6, delay: 1.5 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
       >
         <motion.div
