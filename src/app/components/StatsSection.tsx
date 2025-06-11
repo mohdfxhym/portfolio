@@ -22,7 +22,7 @@ function AnimatedCounter({ target, prefix = "", suffix = "", duration = 2 }: Ani
 
   useEffect(() => {
     if (isInView) {
-      let startTime = null;
+      let startTime: number | null = null;
       const animate = (currentTime: number) => {
         if (startTime === null) startTime = currentTime;
         const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
