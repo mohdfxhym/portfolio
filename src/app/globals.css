@@ -40,6 +40,7 @@ body.dark {
   overflow: hidden;
 }
 
+/* Light mode shimmer effect - white wave on dark text */
 .shimmer-text::after {
   content: '';
   position: absolute;
@@ -47,13 +48,13 @@ body.dark {
   left: -100%;
   width: 200%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
   animation: shimmer 2.5s infinite;
 }
 
-/* Dark mode shimmer effect */
+/* Dark mode shimmer effect - dark wave on light text */
 .dark .shimmer-text::after {
-  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.8), transparent);
 }
 
 @keyframes shimmer {
