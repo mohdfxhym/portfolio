@@ -137,7 +137,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         >
           {/* Glass Card Container */}
           <div
-            className="relative rounded-3xl p-8 text-center overflow-hidden border border-white/10"
+            className="relative rounded-3xl p-8 text-center overflow-visible border border-white/10"
             style={{
               background: `
                 linear-gradient(135deg, 
@@ -179,9 +179,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   }}
                   className="relative z-10"
                 >
-                  {/* Memoji Profile Picture */}
+                  {/* Memoji Profile Picture - Positioned to extend outside */}
                   <motion.div
-                    className="relative mx-auto mb-6"
+                    className="relative mx-auto mb-6 -mt-12"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
@@ -198,33 +198,33 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
                         repeat: Infinity,
                         ease: "easeInOut"
                       }}
-                      className="w-24 h-24 rounded-full overflow-hidden border-2 border-white/20 mx-auto"
+                      className="relative w-32 h-32 rounded-full overflow-hidden border-3 border-white/20 mx-auto bg-gradient-to-br from-gray-100 to-gray-200"
                     >
                       <img
                         src="/images/memoji.png"
                         alt="Mohammed Faheem Memoji"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover scale-110 -translate-y-2"
                       />
-                    </motion.div>
-                    
-                    {/* Online indicator */}
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
-                      className="absolute bottom-1 right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-gray-800 flex items-center justify-center"
-                    >
+                      
+                      {/* Online indicator - Properly positioned */}
                       <motion.div
-                        animate={{
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                        className="w-2 h-2 bg-white rounded-full"
-                      />
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
+                        className="absolute bottom-2 right-2 w-8 h-8 bg-green-500 rounded-full border-3 border-gray-800 flex items-center justify-center"
+                      >
+                        <motion.div
+                          animate={{
+                            scale: [1, 1.2, 1],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          className="w-3 h-3 bg-white rounded-full"
+                        />
+                      </motion.div>
                     </motion.div>
                   </motion.div>
 
@@ -357,7 +357,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
         </motion.div>
 
-        {/* Bottom Apple ID text */}
+        {/* Sarcastic Apple Quote */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: showButton ? 1 : 0 }}
@@ -365,12 +365,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="absolute bottom-8 text-center"
         >
           <p
-            className="text-white/40 text-xs"
+            className="text-white/40 text-xs italic"
             style={{
               fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
-            Secured by Apple-inspired design
+            "Think Different... but make it look exactly like Apple" 🍎
           </p>
         </motion.div>
 
