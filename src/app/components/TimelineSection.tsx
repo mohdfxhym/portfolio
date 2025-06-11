@@ -61,7 +61,7 @@ export default function TimelineSection() {
         <div className="space-y-12">
           {timelineEvents.map((event, idx) => (
             <motion.div
-              key={event.year}
+              key={idx}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
