@@ -61,8 +61,13 @@ const SiriParticle = ({ index, isActive }: { index: number; isActive: boolean })
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const siriAudioRef = useRef<HTMLAudioElement>(null);
   const [siriActive, setSiriActive] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <motion.nav
@@ -109,8 +114,8 @@ export default function Navbar() {
                 : 'linear-gradient(45deg, rgba(56,189,248,0.2), rgba(168,85,247,0.2))'
             }}
           >
-            {/* Siri particles */}
-            {Array.from({ length: 12 }, (_, i) => (
+            {/* Siri particles - only render after component has mounted */}
+            {isMounted && Array.from({ length: 12 }, (_, i) => (
               <SiriParticle key={i} index={i} isActive={siriActive} />
             ))}
             
