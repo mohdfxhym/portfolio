@@ -21,14 +21,6 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   
-  // Ensure no server-side features are used
-  experimental: {
-    appDir: true,
-  },
-  
-  // Disable any potential server-side features
-  swcMinify: true,
-  
   // Ensure clean static export
   distDir: '.next',
 };
