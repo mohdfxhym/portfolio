@@ -24,34 +24,10 @@ export default function HeroSection() {
       <div className="z-10 flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-tight bg-gradient-to-b from-black to-gray-700 dark:from-white dark:to-gray-300 text-transparent bg-clip-text select-text">
           <motion.span
-            className="bg-gradient-to-r from-black via-gray-800 to-white dark:from-white dark:via-gray-300 dark:to-gray-500 text-transparent bg-clip-text inline-block relative"
+            className="bg-gradient-to-r from-black via-gray-800 to-white dark:from-white dark:via-gray-300 dark:to-gray-500 text-transparent bg-clip-text inline-block shimmer-text"
             whileHover={{ scale: 1.15 }}
             transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-            animate={{
-              textShadow: [
-                "0 0 0px rgba(0,0,0,0)",
-                "0 0 20px rgba(59, 130, 246, 0.3)",
-                "0 0 40px rgba(59, 130, 246, 0.2)",
-                "0 0 20px rgba(59, 130, 246, 0.3)",
-                "0 0 0px rgba(0,0,0,0)"
-              ]
-            }}
-            style={{
-              filter: "drop-shadow(0 0 20px rgba(59, 130, 246, 0.1))"
-            }}
           >
-            <motion.span
-              className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 dark:from-blue-300/30 dark:via-purple-300/30 dark:to-pink-300/30 rounded-lg blur-xl"
-              animate={{
-                opacity: [0.3, 0.6, 0.8, 0.6, 0.3],
-                scale: [1, 1.05, 1.1, 1.05, 1]
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
             Mohammed Faheem
           </motion.span>
         </h1>
@@ -91,4 +67,4 @@ export default function HeroSection() {
       </div>
     </motion.section>
   );
-}
+} 
