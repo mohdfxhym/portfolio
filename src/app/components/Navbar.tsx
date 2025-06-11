@@ -32,7 +32,7 @@ export default function Navbar() {
       {/* Enhanced Siri-style orb for mobile menu */}
       <div className="md:hidden flex items-center">
         <button
-          className="flex items-center justify-center p-1 focus:outline-none"
+          className="flex items-center justify-center p-2 focus:outline-none"
           onClick={async () => {
             if (!menuOpen) {
               setSiriActive(true);
@@ -49,7 +49,7 @@ export default function Navbar() {
         >
           <motion.div
             animate={siriActive ? { 
-              scale: [1, 1.3, 1.1, 1.2, 1],
+              scale: [1, 1.2, 1],
               rotate: [0, 180, 360],
             } : { 
               scale: 1,
@@ -59,34 +59,54 @@ export default function Navbar() {
               duration: siriActive ? 1.5 : 0.3,
               ease: "easeInOut"
             }}
-            className="relative w-14 h-14 rounded-full flex items-center justify-center overflow-hidden"
-            style={{
-              background: siriActive 
-                ? 'conic-gradient(from 0deg, #60A5FA, #A78BFA, #F472B6, #34D399, #FBBF24, #60A5FA)' 
-                : 'linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3), rgba(244,114,182,0.2))',
-              boxShadow: siriActive 
-                ? '0 0 30px 15px rgba(96,165,250,0.3), 0 0 60px 30px rgba(167,139,250,0.2)' 
-                : '0 0 20px 8px rgba(96,165,250,0.2)'
-            }}
+            className="relative w-12 h-12 rounded-full flex items-center justify-center"
           >
+            {/* Subtle circle border */}
+            <motion.div
+              className="absolute inset-0 rounded-full border-2"
+              style={{
+                borderColor: siriActive 
+                  ? 'rgba(96,165,250,0.8)' 
+                  : 'rgba(96,165,250,0.3)',
+              }}
+              animate={siriActive ? {
+                borderColor: [
+                  'rgba(96,165,250,0.8)',
+                  'rgba(167,139,250,0.8)',
+                  'rgba(244,114,182,0.8)',
+                  'rgba(52,211,153,0.8)',
+                  'rgba(96,165,250,0.8)'
+                ],
+                scale: [1, 1.1, 1],
+              } : {
+                borderColor: 'rgba(96,165,250,0.3)',
+                scale: 1,
+              }}
+              transition={{
+                duration: siriActive ? 1.5 : 0.3,
+                repeat: siriActive ? Infinity : 0,
+                ease: "easeInOut"
+              }}
+            />
+
             {/* Animated particles */}
-            {isMounted && siriActive && Array.from({ length: 8 }, (_, i) => (
+            {isMounted && siriActive && Array.from({ length: 6 }, (_, i) => (
               <motion.div
                 key={i}
-                className="absolute w-1.5 h-1.5 rounded-full"
+                className="absolute w-1 h-1 rounded-full"
                 style={{
-                  background: `hsl(${i * 45}, 70%, 60%)`,
+                  background: `hsl(${i * 60}, 70%, 60%)`,
                   left: '50%',
                   top: '50%',
                 }}
                 animate={{
-                  x: [0, Math.cos(i * 45 * Math.PI / 180) * 25],
-                  y: [0, Math.sin(i * 45 * Math.PI / 180) * 25],
-                  scale: [0, 1.5, 0],
+                  x: [0, Math.cos(i * 60 * Math.PI / 180) * 20],
+                  y: [0, Math.sin(i * 60 * Math.PI / 180) * 20],
+                  scale: [0, 1, 0],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
-                  duration: 1.2,
+                  duration: 1,
                   repeat: Infinity,
                   delay: i * 0.1,
                   ease: "easeInOut"
@@ -94,67 +114,85 @@ export default function Navbar() {
               />
             ))}
             
-            {/* Central pulsing core */}
-            <motion.div
-              className="absolute w-6 h-6 rounded-full"
-              style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 70%)',
-              }}
-              animate={siriActive ? {
-                scale: [1, 1.8, 1.2, 1.5, 1],
-                opacity: [0.8, 1, 0.9, 1, 0.8],
-              } : {
-                scale: [1, 1.1, 1],
-                opacity: [0.6, 0.8, 0.6],
-              }}
-              transition={{
-                duration: siriActive ? 1.5 : 2,
-                repeat: Infinity,
-                repeatType: 'reverse',
-                ease: "easeInOut"
-              }}
-            />
-            
-            {/* Outer ripple rings */}
-            {Array.from({ length: 3 }, (_, i) => (
+            {/* Central Siri waves */}
+            <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <motion.path
+                d="M8 22 Q14 10, 22 22 T36 22"
+                stroke="url(#siriGradient1)"
+                strokeWidth="3"
+                fill="none"
+                initial={false}
+                animate={siriActive ? { d: [
+                  'M8 22 Q14 10, 22 22 T36 22',
+                  'M8 22 Q14 34, 22 22 T36 22',
+                  'M8 22 Q14 10, 22 22 T36 22',
+                ] } : { d: 'M8 22 Q14 10, 22 22 T36 22' }}
+                transition={{ duration: 0.6, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
+              />
+              <motion.path
+                d="M12 22 Q18 16, 22 22 T32 22"
+                stroke="url(#siriGradient2)"
+                strokeWidth="2"
+                fill="none"
+                initial={false}
+                animate={siriActive ? { d: [
+                  'M12 22 Q18 16, 22 22 T32 22',
+                  'M12 22 Q18 28, 22 22 T32 22',
+                  'M12 22 Q18 16, 22 22 T32 22',
+                ] } : { d: 'M12 22 Q18 16, 22 22 T32 22' }}
+                transition={{ duration: 0.7, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
+              />
+              <motion.path
+                d="M16 22 Q19 19, 22 22 T28 22"
+                stroke="url(#siriGradient3)"
+                strokeWidth="1.5"
+                fill="none"
+                initial={false}
+                animate={siriActive ? { d: [
+                  'M16 22 Q19 19, 22 22 T28 22',
+                  'M16 22 Q19 25, 22 22 T28 22',
+                  'M16 22 Q19 19, 22 22 T28 22',
+                ] } : { d: 'M16 22 Q19 19, 22 22 T28 22' }}
+                transition={{ duration: 0.8, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
+              />
+              <defs>
+                <linearGradient id="siriGradient1" x1="8" y1="10" x2="36" y2="34" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#60A5FA" />
+                  <stop offset="0.5" stopColor="#A78BFA" />
+                  <stop offset="1" stopColor="#F472B6" />
+                </linearGradient>
+                <linearGradient id="siriGradient2" x1="12" y1="16" x2="32" y2="28" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#34D399" />
+                  <stop offset="1" stopColor="#818CF8" />
+                </linearGradient>
+                <linearGradient id="siriGradient3" x1="16" y1="19" x2="28" y2="25" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#F472B6" />
+                  <stop offset="1" stopColor="#60A5FA" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Outer ripple rings - only when active */}
+            {siriActive && Array.from({ length: 2 }, (_, i) => (
               <motion.div
                 key={i}
-                className="absolute rounded-full border border-white/40"
+                className="absolute rounded-full border border-blue-400/30"
                 style={{
-                  width: `${(i + 2) * 12}px`,
-                  height: `${(i + 2) * 12}px`,
+                  width: `${(i + 3) * 16}px`,
+                  height: `${(i + 3) * 16}px`,
                 }}
-                animate={siriActive ? {
-                  scale: [1, 1.5, 1.2],
-                  opacity: [0.6, 0.2, 0.4],
-                } : {
-                  scale: 1,
-                  opacity: 0.3,
+                animate={{
+                  scale: [1, 1.5],
+                  opacity: [0.6, 0],
                 }}
                 transition={{
                   duration: 1.5,
-                  repeat: siriActive ? Infinity : 0,
-                  delay: i * 0.2,
+                  repeat: Infinity,
+                  delay: i * 0.3,
                   ease: "easeOut"
                 }}
               />
             ))}
-
-            {/* Rotating gradient overlay */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
-              style={{
-                background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.2), transparent)',
-              }}
-              animate={{
-                rotate: siriActive ? [0, 360] : [0, 180, 360],
-              }}
-              transition={{
-                duration: siriActive ? 2 : 4,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
           </motion.div>
           <audio ref={siriAudioRef} src="/siri-activate.mp3" preload="auto" />
         </button>
@@ -178,13 +216,13 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Enhanced Mobile menu with circular design */}
+      {/* Enhanced Mobile menu with original rectangular design */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ 
               opacity: 0, 
-              scale: 0.3,
+              scale: 0.8,
               y: -20,
             }}
             animate={{ 
@@ -194,7 +232,7 @@ export default function Navbar() {
             }}
             exit={{ 
               opacity: 0, 
-              scale: 0.3,
+              scale: 0.8,
               y: -20,
             }}
             transition={{
@@ -203,13 +241,9 @@ export default function Navbar() {
               damping: 25,
               duration: 0.4
             }}
-            className="absolute top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-full shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center"
-            style={{
-              background: 'radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(96,165,250,0.2)',
-            }}
+            className="absolute top-14 left-1/2 -translate-x-1/2 w-[90vw] bg-black/90 dark:bg-white/10 backdrop-blur-xl rounded-2xl shadow-glass flex flex-col items-center gap-4 py-6 z-50 md:hidden border border-black/40 dark:border-white/20"
           >
-            <ul className="flex flex-col items-center justify-center gap-3 p-8">
+            <ul className="flex flex-col items-center justify-center gap-2 w-full">
               {navLinks.map((link, index) => (
                 <motion.li 
                   key={link.name}
@@ -220,13 +254,13 @@ export default function Navbar() {
                     duration: 0.3,
                     ease: "easeOut"
                   }}
-                  className="w-full"
+                  className="w-full px-4"
                 >
                   <motion.a
                     href={link.href}
-                    className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
+                    className="block w-full text-center text-white dark:text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
                     whileHover={{ 
-                      scale: 1.1,
+                      scale: 1.05,
                       backgroundColor: 'rgba(96,165,250,0.2)',
                       boxShadow: '0 0 20px rgba(96,165,250,0.3)',
                     }}
