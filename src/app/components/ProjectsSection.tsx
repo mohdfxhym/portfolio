@@ -36,7 +36,7 @@ export default function ProjectsSection() {
         Featured Projects
       </h2>
       <div className="grid gap-8 md:grid-cols-3">
-        {projects.map((project, _idx) => (
+        {projects.map((project) => (
           <motion.div
             key={project.title}
             whileHover={{ y: -8, boxShadow: "0 8px 32px 0 rgba(31,38,135,0.15)" }}
