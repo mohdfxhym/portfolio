@@ -122,7 +122,7 @@ export default function Navbar() {
                 if (siriAudioRef.current) {
                   try {
                     await siriAudioRef.current.play();
-                  } catch (e) {
+                  } catch {
                     // Audio play failed, continue without sound
                   }
                 }

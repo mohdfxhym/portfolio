@@ -49,7 +49,7 @@ interface HomeProps {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export default function Home({ searchParams }: HomeProps) {
+export default function Home({}: HomeProps) {
   const [showLoading, setShowLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [mounted, setMounted] = useState(false);

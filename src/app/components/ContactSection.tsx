@@ -119,7 +119,7 @@ export default function ContactSection() {
 
       {/* Download Resume Button */}
       <motion.a
-        href="/Mohammed_Faheem resume.pdf"
+        href="/Mohammed_Faheem_Fullstack_Developer_Resume.pdf"
         className="inline-block px-6 py-3 rounded-full bg-black/20 dark:bg-white/10 backdrop-blur-xl border border-black/40 dark:border-white/20 shadow-glass text-appleBlack dark:text-white font-medium transition-all duration-200 hover:bg-black/30 dark:hover:bg-white/20 mb-8"
         download
         whileHover={{ scale: 1.05 }}
