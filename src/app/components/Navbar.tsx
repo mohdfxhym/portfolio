@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import DarkModeToggle from "./DarkModeToggle";
 
 const navLinks = [
@@ -11,6 +11,53 @@ const navLinks = [
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
+
+// Siri-inspired particle component
+const SiriParticle = ({ index, isActive }: { index: number; isActive: boolean }) => {
+  const [animationValues, setAnimationValues] = useState({
+    x: 0,
+    y: 0,
+    color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.random() * 0.5 + 0.5})`
+  });
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = setInterval(() => {
+        setAnimationValues({
+          x: Math.random() * 40 - 20,
+          y: Math.random() * 40 - 20,
+          color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.random() * 0.5 + 0.5})`
+        });
+      }, 200);
+
+      return () => clearInterval(interval);
+    }
+  }, [isActive]);
+
+  return (
+    <motion.div
+      className="absolute w-1 h-1 rounded-full"
+      style={{
+        boxShadow: `0 0 20px 15px ${animationValues.color}`,
+        left: '50%',
+        top: '50%',
+      }}
+      animate={isActive ? {
+        x: animationValues.x,
+        y: animationValues.y,
+        scale: [0.5, 1.2, 0.8, 1],
+      } : {
+        x: 0,
+        y: 0,
+        scale: 0.5,
+      }}
+      transition={{
+        duration: 0.8,
+        ease: "easeInOut",
+      }}
+    />
+  );
+};
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,7 +81,7 @@ export default function Navbar() {
             setTimeout(() => {
               setMenuOpen(true);
               setSiriActive(false);
-            }, 600); // Duration of the pulse and sound
+            }, 1200); // Duration of the animation
           } else {
             setMenuOpen(false);
           }
@@ -42,73 +89,70 @@ export default function Navbar() {
         aria-label="Toggle navigation menu"
       >
         <motion.div
-          animate={siriActive ? { scale: [1, 1.15, 1], boxShadow: [
-            '0 0 0 0 rgba(56,189,248,0.5)',
-            '0 0 16px 8px rgba(168,85,247,0.2)',
-            '0 0 0 0 rgba(56,189,248,0.0)'] } : { scale: 1, boxShadow: '0 0 0 0 rgba(56,189,248,0.0)' }}
-          transition={{ duration: 0.6 }}
-          className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg bg-transparent"
+          animate={siriActive ? { 
+            scale: [1, 1.2, 1],
+            boxShadow: [
+              '0 0 0 0 rgba(56,189,248,0.5)',
+              '0 0 20px 10px rgba(168,85,247,0.3)',
+              '0 0 0 0 rgba(56,189,248,0.0)'
+            ] 
+          } : { 
+            scale: 1, 
+            boxShadow: '0 0 0 0 rgba(56,189,248,0.0)' 
+          }}
+          transition={{ duration: 1.2 }}
+          className="relative w-12 h-12 rounded-full flex items-center justify-center overflow-hidden"
+          style={{
+            background: siriActive 
+              ? 'linear-gradient(45deg, rgba(56,189,248,0.3), rgba(168,85,247,0.3), rgba(244,114,182,0.3))' 
+              : 'linear-gradient(45deg, rgba(56,189,248,0.2), rgba(168,85,247,0.2))'
+          }}
         >
-          <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <motion.path
-              d="M8 22 Q14 10, 22 22 T36 22"
-              stroke="url(#siriGradient1)"
-              strokeWidth="3.5"
-              fill="none"
-              initial={false}
-              animate={siriActive ? { d: [
-                'M8 22 Q14 10, 22 22 T36 22',
-                'M8 22 Q14 34, 22 22 T36 22',
-                'M8 22 Q14 10, 22 22 T36 22',
-              ] } : { d: 'M8 22 Q14 10, 22 22 T36 22' }}
-              transition={{ duration: 0.6, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
-            />
-            <motion.path
-              d="M12 22 Q18 16, 22 22 T32 22"
-              stroke="url(#siriGradient2)"
-              strokeWidth="2.5"
-              fill="none"
-              initial={false}
-              animate={siriActive ? { d: [
-                'M12 22 Q18 16, 22 22 T32 22',
-                'M12 22 Q18 28, 22 22 T32 22',
-                'M12 22 Q18 16, 22 22 T32 22',
-              ] } : { d: 'M12 22 Q18 16, 22 22 T32 22' }}
-              transition={{ duration: 0.7, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
-            />
-            <motion.path
-              d="M16 22 Q19 19, 22 22 T28 22"
-              stroke="url(#siriGradient3)"
-              strokeWidth="1.5"
-              fill="none"
-              initial={false}
-              animate={siriActive ? { d: [
-                'M16 22 Q19 19, 22 22 T28 22',
-                'M16 22 Q19 25, 22 22 T28 22',
-                'M16 22 Q19 19, 22 22 T28 22',
-              ] } : { d: 'M16 22 Q19 19, 22 22 T28 22' }}
-              transition={{ duration: 0.8, repeat: siriActive ? Infinity : 0, repeatType: 'reverse' }}
-            />
-            <defs>
-              <linearGradient id="siriGradient1" x1="8" y1="10" x2="36" y2="34" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#60A5FA" />
-                <stop offset="0.5" stopColor="#A78BFA" />
-                <stop offset="1" stopColor="#F472B6" />
-              </linearGradient>
-              <linearGradient id="siriGradient2" x1="12" y1="16" x2="32" y2="28" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#34D399" />
-                <stop offset="1" stopColor="#818CF8" />
-              </linearGradient>
-              <linearGradient id="siriGradient3" x1="16" y1="19" x2="28" y2="25" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#F472B6" />
-                <stop offset="1" stopColor="#60A5FA" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div className="absolute w-12 h-12 rounded-full blur-2xl bg-gradient-to-tr from-blue-400 via-purple-400 to-pink-400 opacity-30" />
+          {/* Siri particles */}
+          {Array.from({ length: 12 }, (_, i) => (
+            <SiriParticle key={i} index={i} isActive={siriActive} />
+          ))}
+          
+          {/* Central glow */}
+          <motion.div
+            className="absolute w-2 h-2 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)',
+            }}
+            animate={siriActive ? {
+              scale: [1, 2, 1],
+              opacity: [0.8, 1, 0.8],
+            } : {
+              scale: 1,
+              opacity: 0.6,
+            }}
+            transition={{
+              duration: 0.8,
+              repeat: siriActive ? Infinity : 0,
+              repeatType: 'reverse',
+            }}
+          />
+          
+          {/* Outer ring */}
+          <motion.div
+            className="absolute w-10 h-10 rounded-full border border-white/30"
+            animate={siriActive ? {
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            } : {
+              scale: 1,
+              opacity: 0.3,
+            }}
+            transition={{
+              duration: 1,
+              repeat: siriActive ? Infinity : 0,
+              repeatType: 'reverse',
+            }}
+          />
         </motion.div>
         <audio ref={siriAudioRef} src="/siri-activate.mp3" preload="auto" />
       </button>
+
       {/* Nav links */}
       <ul className="hidden md:flex gap-2 sm:gap-4 md:gap-8 mx-auto">
         {navLinks.map(link => (
@@ -126,6 +170,7 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
+
       {/* Mobile menu */}
       {menuOpen && (
         <motion.ul
@@ -153,4 +198,4 @@ export default function Navbar() {
       <DarkModeToggle />
     </motion.nav>
   );
-} 
+}
