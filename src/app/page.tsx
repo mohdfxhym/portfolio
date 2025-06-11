@@ -2,13 +2,19 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamically import components to avoid SSR issues
+// Dynamically import components to avoid SSR issues with no SSR
 const LoadingScreen = dynamic(() => import("./components/LoadingScreen"), {
-  ssr: false
+  ssr: false,
+  loading: () => (
+    <div className="fixed inset-0 bg-black flex items-center justify-center">
+      <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+    </div>
+  )
 });
 
 const HeroSection = dynamic(() => import("./components/HeroSection"), {
-  ssr: false
+  ssr: false,
+  loading: () => <div className="min-h-screen bg-black"></div>
 });
 
 const ProjectsSection = dynamic(() => import("./components/ProjectsSection"), {
