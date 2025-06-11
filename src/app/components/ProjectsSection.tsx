@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const projects = [
   {
@@ -42,9 +43,11 @@ export default function ProjectsSection() {
             whileHover={{ y: -8, boxShadow: "0 8px 32px 0 rgba(31,38,135,0.15)" }}
             className="group bg-white/70 dark:bg-white/10 backdrop-blur-xs rounded-2xl shadow-glass p-6 flex flex-col items-start transition-all duration-200 border border-white/40 dark:border-white/20 hover:border-appleBlue"
           >
-            <img
+            <Image
               src={project.image}
               alt={project.title + ' icon'}
+              width={80}
+              height={80}
               className="w-20 h-20 object-contain mb-3 rounded-xl shadow"
             />
             <h3 className="text-lg font-semibold mb-2 group-hover:text-appleBlue transition-colors">
