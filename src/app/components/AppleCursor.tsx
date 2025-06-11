@@ -7,6 +7,7 @@ export default function AppleCursor() {
   const [isHovering, setIsHovering] = useState(false);
   const [cursorText, setCursorText] = useState("");
   const [cursorVariant, setCursorVariant] = useState("default");
+  const [mounted, setMounted] = useState(false);
 
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -16,9 +17,17 @@ export default function AppleCursor() {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    setMounted(true);
+    setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
+      setIsVisible(true);
     };
 
     const handleMouseEnter = () => setIsVisible(true);
@@ -86,7 +95,7 @@ export default function AppleCursor() {
       document.removeEventListener("mouseover", handleMouseOver);
       document.removeEventListener("mouseout", handleMouseOut);
     };
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, mounted]);
 
   const variants = {
     default: {
@@ -119,37 +128,45 @@ export default function AppleCursor() {
     },
   };
 
+  // Don't render on server or until mounted
+  if (!mounted) return null;
+
   return (
     <>
       {/* Hide default cursor */}
       <style jsx global>{`
-        * {
+        html, body, * {
+          cursor: none !important;
+        }
+        
+        a, button, [role="button"], input, textarea, select {
           cursor: none !important;
         }
       `}</style>
 
       {/* Custom cursor */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
         }}
-        animate={isVisible ? "visible" : "hidden"}
-        variants={{
-          visible: { opacity: 1 },
-          hidden: { opacity: 0 },
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
       >
         {/* Main cursor dot */}
         <motion.div
-          className="rounded-full backdrop-blur-sm"
+          className="rounded-full backdrop-blur-sm shadow-lg"
           animate={cursorVariant}
           variants={variants}
           transition={{
             type: "spring",
             stiffness: 500,
             damping: 28,
+          }}
+          style={{
+            boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
           }}
         />
 
@@ -162,7 +179,7 @@ export default function AppleCursor() {
             transition={{ duration: 0.2 }}
             className="absolute top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap"
           >
-            <div className="px-3 py-1 bg-black/80 dark:bg-white/80 text-white dark:text-black text-sm font-medium rounded-full backdrop-blur-md border border-white/20 dark:border-black/20">
+            <div className="px-3 py-1 bg-black/90 dark:bg-white/90 text-white dark:text-black text-sm font-medium rounded-full backdrop-blur-md border border-white/20 dark:border-black/20 shadow-lg">
               {cursorText}
             </div>
           </motion.div>
@@ -183,7 +200,7 @@ export default function AppleCursor() {
           {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute rounded-full bg-white/20 dark:bg-black/20"
+              className="absolute rounded-full bg-white/30 dark:bg-black/30"
               style={{
                 width: 8 - i * 2,
                 height: 8 - i * 2,
@@ -212,21 +229,19 @@ export default function AppleCursor() {
           x: cursorXSpring,
           y: cursorYSpring,
         }}
-        animate={isVisible ? "visible" : "hidden"}
-        variants={{
-          visible: { opacity: 1 },
-          hidden: { opacity: 0 },
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVisible ? 1 : 0 }}
+        transition={{ duration: 0.2 }}
       >
         <motion.div
           className="w-16 h-16 rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(0,113,227,0.1) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,113,227,0.15) 0%, transparent 70%)",
             transform: "translate(-50%, -50%)",
           }}
           animate={{
             scale: isHovering ? [1, 1.5, 1] : 1,
-            opacity: isHovering ? [0.3, 0.6, 0.3] : 0.2,
+            opacity: isHovering ? [0.4, 0.7, 0.4] : 0.3,
           }}
           transition={{
             duration: 2,
