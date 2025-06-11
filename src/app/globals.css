@@ -51,6 +51,11 @@ body.dark {
   animation: shimmer 2.5s infinite;
 }
 
+/* Dark mode shimmer effect */
+.dark .shimmer-text::after {
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.4), transparent);
+}
+
 @keyframes shimmer {
   0% { left: -100%; }
   100% { left: 100%; }
