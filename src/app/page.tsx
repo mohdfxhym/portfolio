@@ -39,7 +39,11 @@ const ContactSection = dynamic(() => import("./components/ContactSection"), {
   ssr: false
 });
 
-export default function Home() {
+interface HomeProps {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default function Home({ searchParams }: HomeProps) {
   const [showLoading, setShowLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [mounted, setMounted] = useState(false);
