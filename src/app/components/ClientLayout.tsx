@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-// Dynamically import client-side components
+// Dynamically import client-side components with no SSR
 const AppleCursor = dynamic(() => import("./AppleCursor"), {
   ssr: false
 });

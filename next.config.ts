@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Force static generation to avoid workStore issues
+  output: 'export',
+  trailingSlash: true,
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

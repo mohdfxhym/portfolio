@@ -24,12 +24,14 @@ export default function Navbar() {
     setIsMounted(true);
     
     // Check if it's mobile and if welcome has been shown before
-    const isMobile = window.innerWidth < 768;
-    const hasSeenWelcome = localStorage.getItem('hasSeenMobileWelcome');
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const hasSeenWelcome = typeof window !== 'undefined' && localStorage.getItem('hasSeenMobileWelcome');
     
     if (isMobile && !hasSeenWelcome) {
       setShowMobileWelcome(true);
-      localStorage.setItem('hasSeenMobileWelcome', 'true');
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('hasSeenMobileWelcome', 'true');
+      }
     } else {
       setShowNavbar(true);
     }
@@ -117,7 +119,13 @@ export default function Navbar() {
             onClick={async () => {
               if (!menuOpen) {
                 setSiriActive(true);
-                siriAudioRef.current?.play();
+                if (siriAudioRef.current) {
+                  try {
+                    await siriAudioRef.current.play();
+                  } catch (e) {
+                    // Audio play failed, continue without sound
+                  }
+                }
                 setTimeout(() => {
                   setMenuOpen(true);
                   setSiriActive(false);
@@ -237,7 +245,9 @@ export default function Navbar() {
                 }}
               />
             </motion.div>
-            <audio ref={siriAudioRef} src="/siri-activate.mp3" preload="auto" />
+            {typeof window !== 'undefined' && (
+              <audio ref={siriAudioRef} src="/siri-activate.mp3" preload="auto" />
+            )}
           </button>
         </div>
 
