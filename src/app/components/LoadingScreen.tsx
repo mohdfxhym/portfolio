@@ -9,32 +9,30 @@ interface LoadingScreenProps {
 export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [currentPhase, setCurrentPhase] = useState(0);
-  const [showProfile, setShowProfile] = useState(false);
+  const [showAppleLogo, setShowAppleLogo] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
   const phases = [
-    "Preparing your experience...",
-    "Loading portfolio data...",
-    "Almost ready...",
-    "Welcome back!"
+    "Starting up...",
+    "Loading system components...",
+    "Initializing portfolio...",
+    "Ready to innovate!"
   ];
 
   useEffect(() => {
-    // Show profile after initial delay
-    const profileTimer = setTimeout(() => {
-      setShowProfile(true);
-    }, 1000);
+    // Show Apple logo immediately
+    setShowAppleLogo(true);
 
-    // Show button after profile loads
+    // Show button after loading completes
     const buttonTimer = setTimeout(() => {
       setShowButton(true);
-    }, 2500);
+    }, 4000);
 
     // Simulate loading progress
     const progressInterval = setInterval(() => {
       setLoadingProgress(prev => {
-        const increment = Math.random() * 8 + 2; // 2-10% increments
+        const increment = Math.random() * 6 + 3; // 3-9% increments
         const newProgress = prev + increment;
         
         // Update phase based on progress
@@ -49,10 +47,9 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         
         return newProgress;
       });
-    }, 300);
+    }, 200);
 
     return () => {
-      clearTimeout(profileTimer);
       clearTimeout(buttonTimer);
       clearInterval(progressInterval);
     };
@@ -72,295 +69,222 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0, scale: 1.05 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="fixed inset-0 z-[200] flex flex-col items-center justify-center overflow-hidden"
-        style={{
-          background: `
-            radial-gradient(circle at 20% 30%, rgba(30, 30, 35, 0.8) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(25, 25, 30, 0.6) 0%, transparent 50%),
-            linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 50%, #1c1c1e 100%)
-          `
-        }}
+        className="fixed inset-0 z-[200] flex flex-col items-center justify-center overflow-hidden bg-black"
       >
         {/* Subtle animated background particles */}
         <div className="absolute inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
+          {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-white/5 rounded-full"
+              className="absolute w-1 h-1 bg-white/3 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
-                y: [-20, -100, -20],
-                opacity: [0, 0.3, 0],
-                scale: [0, 1.2, 0],
+                y: [-30, -120, -30],
+                opacity: [0, 0.4, 0],
+                scale: [0, 1.5, 0],
               }}
               transition={{
-                duration: 6 + Math.random() * 3,
+                duration: 8 + Math.random() * 4,
                 repeat: Infinity,
-                delay: Math.random() * 4,
+                delay: Math.random() * 6,
                 ease: "easeInOut"
               }}
             />
           ))}
         </div>
 
-        {/* Apple Logo */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-12"
-        >
-          <motion.div
-            animate={{
-              opacity: [0.7, 1, 0.7],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="text-white text-4xl"
-          >
-            
-          </motion.div>
-        </motion.div>
+        {/* Apple Logo with Bootup Animation */}
+        <AnimatePresence>
+          {showAppleLogo && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.3 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ 
+                duration: 1.5, 
+                ease: [0.25, 0.46, 0.45, 0.94] // Apple's signature easing
+              }}
+              className="mb-16"
+            >
+              {/* Apple Logo with Glow Effect */}
+              <motion.div
+                className="relative flex items-center justify-center"
+                animate={{
+                  filter: [
+                    "drop-shadow(0 0 20px rgba(255,255,255,0.3))",
+                    "drop-shadow(0 0 40px rgba(255,255,255,0.6))",
+                    "drop-shadow(0 0 20px rgba(255,255,255,0.3))"
+                  ]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {/* Apple Logo SVG */}
+                <motion.svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 24 24"
+                  fill="white"
+                  className="drop-shadow-2xl"
+                  animate={{
+                    scale: [1, 1.05, 1],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </motion.svg>
 
-        {/* Main Sign-In Container */}
+                {/* Pulsing Ring Around Logo */}
+                <motion.div
+                  className="absolute inset-0 rounded-full border border-white/20"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    left: "-20px",
+                    top: "-20px",
+                  }}
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [0.3, 0.1, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Bootup Progress Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-          className="relative max-w-sm w-full mx-auto px-8"
+          transition={{ duration: 1, delay: 1 }}
+          className="text-center max-w-md w-full px-8"
         >
-          {/* Glass Card Container */}
-          <div
-            className="relative rounded-3xl p-8 text-center overflow-visible border border-white/10"
-            style={{
-              background: `
-                linear-gradient(135deg, 
-                  rgba(255, 255, 255, 0.1) 0%, 
-                  rgba(255, 255, 255, 0.05) 50%,
-                  rgba(255, 255, 255, 0.02) 100%
-                )
-              `,
-              backdropFilter: "blur(20px)",
-              boxShadow: `
-                0 20px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                0 0 0 1px rgba(255, 255, 255, 0.05)
-              `
-            }}
-          >
-            {/* Subtle inner glow */}
-            <div
-              className="absolute inset-0 rounded-3xl opacity-30"
+          {/* Progress Bar */}
+          <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-6">
+            <motion.div
+              className="h-full bg-gradient-to-r from-white via-gray-300 to-white rounded-full"
+              initial={{ width: "0%" }}
+              animate={{ width: `${loadingProgress}%` }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
               style={{
-                background: `
-                  radial-gradient(circle at 50% 0%, 
-                    rgba(255, 255, 255, 0.1) 0%, 
-                    transparent 50%
-                  )
-                `
+                boxShadow: "0 0 10px rgba(255,255,255,0.5)"
               }}
             />
-
-            {/* Profile Section */}
-            <AnimatePresence>
-              {showProfile && (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    ease: [0.25, 0.46, 0.45, 0.94] // Apple's signature easing
-                  }}
-                  className="relative z-10"
-                >
-                  {/* Memoji Profile Picture - Positioned to extend outside */}
-                  <motion.div
-                    className="relative mx-auto mb-6 -mt-12"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  >
-                    <motion.div
-                      animate={{
-                        boxShadow: [
-                          "0 0 30px rgba(255, 255, 255, 0.1)",
-                          "0 0 50px rgba(255, 255, 255, 0.2)",
-                          "0 0 30px rgba(255, 255, 255, 0.1)"
-                        ]
-                      }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                      className="relative w-32 h-32 mx-auto"
-                    >
-                      <img
-                        src="/images/memoji.png"
-                        alt="Mohammed Faheem Memoji"
-                        className="w-full h-full object-contain scale-110 -translate-y-2"
-                        style={{
-                          filter: "drop-shadow(0 10px 20px rgba(0,0,0,0.3))"
-                        }}
-                      />
-                      
-                      {/* Online indicator - Properly positioned */}
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.5, type: "spring", stiffness: 300 }}
-                        className="absolute bottom-2 right-2 w-8 h-8 bg-green-500 rounded-full border-3 border-gray-800 flex items-center justify-center"
-                      >
-                        <motion.div
-                          animate={{
-                            scale: [1, 1.2, 1],
-                          }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                          }}
-                          className="w-3 h-3 bg-white rounded-full"
-                        />
-                      </motion.div>
-                    </motion.div>
-                  </motion.div>
-
-                  {/* Name and Title */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="mb-6"
-                  >
-                    <h2
-                      className="text-2xl font-medium text-white mb-1"
-                      style={{
-                        fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                      }}
-                    >
-                      Mohammed Faheem
-                    </h2>
-                    <p
-                      className="text-white/60 text-sm"
-                      style={{
-                        fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                      }}
-                    >
-                      Creative Developer
-                    </p>
-                  </motion.div>
-
-                  {/* Loading Progress */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                    className="mb-6"
-                  >
-                    {/* Progress Bar */}
-                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-3">
-                      <motion.div
-                        className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
-                        initial={{ width: "0%" }}
-                        animate={{ width: `${loadingProgress}%` }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                      />
-                    </div>
-                    
-                    {/* Loading Text */}
-                    <motion.p
-                      key={currentPhase}
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      transition={{ duration: 0.4 }}
-                      className="text-white/50 text-xs"
-                      style={{
-                        fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                      }}
-                    >
-                      {phases[currentPhase]}
-                    </motion.p>
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Access Button */}
-            <AnimatePresence>
-              {showButton && loadingProgress >= 100 && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
-                  onClick={handleAccessPortfolio}
-                  className="group relative w-full py-4 px-6 rounded-2xl font-medium text-white overflow-hidden transition-all duration-300"
-                  style={{
-                    background: `
-                      linear-gradient(135deg, 
-                        rgba(0, 122, 255, 0.8) 0%, 
-                        rgba(0, 122, 255, 0.9) 100%
-                      )
-                    `,
-                    boxShadow: `
-                      0 8px 25px rgba(0, 122, 255, 0.3),
-                      inset 0 1px 0 rgba(255, 255, 255, 0.2)
-                    `,
-                    fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
-                  }}
-                  whileHover={{ 
-                    scale: 1.02,
-                    boxShadow: "0 12px 35px rgba(0, 122, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {/* Button shimmer effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{
-                      x: ["-100%", "100%"],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  <span className="relative z-10 flex items-center justify-center">
-                    Access Portfolio
-                    <motion.span
-                      className="ml-2"
-                      animate={{
-                        x: [0, 3, 0],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      →
-                    </motion.span>
-                  </span>
-                </motion.button>
-              )}
-            </AnimatePresence>
           </div>
+          
+          {/* Loading Text */}
+          <motion.p
+            key={currentPhase}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="text-white/70 text-sm mb-2"
+            style={{
+              fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+            }}
+          >
+            {phases[currentPhase]}
+          </motion.p>
+
+          {/* Progress Percentage */}
+          <motion.p
+            className="text-white/50 text-xs"
+            style={{
+              fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+            }}
+          >
+            {Math.round(loadingProgress)}%
+          </motion.p>
         </motion.div>
 
-        {/* Sarcastic Apple Quote */}
+        {/* Access Button */}
+        <AnimatePresence>
+          {showButton && loadingProgress >= 100 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ 
+                duration: 0.8, 
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              className="mt-12"
+            >
+              <motion.button
+                onClick={handleAccessPortfolio}
+                className="group relative px-8 py-4 rounded-2xl font-medium text-white overflow-hidden transition-all duration-300 border border-white/20"
+                style={{
+                  background: `
+                    linear-gradient(135deg, 
+                      rgba(255, 255, 255, 0.1) 0%, 
+                      rgba(255, 255, 255, 0.05) 100%
+                    )
+                  `,
+                  backdropFilter: "blur(20px)",
+                  boxShadow: `
+                    0 8px 25px rgba(255, 255, 255, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2)
+                  `,
+                  fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 12px 35px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)"
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {/* Button shimmer effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  animate={{
+                    x: ["-100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatDelay: 3,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <span className="relative z-10 flex items-center justify-center">
+                  Enter Portfolio
+                  <motion.span
+                    className="ml-2"
+                    animate={{
+                      x: [0, 4, 0],
+                    }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Sarcastic Design Quote */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: showButton ? 1 : 0 }}
@@ -368,12 +292,12 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="absolute bottom-8 text-center"
         >
           <p
-            className="text-white/40 text-xs italic"
+            className="text-white/30 text-xs italic"
             style={{
               fontFamily: "'SF Pro Text', -apple-system, BlinkMacSystemFont, system-ui, sans-serif",
             }}
           >
-            "Think Different... but make it look exactly like Apple" 🍎
+            "I love the white" - Every designer copying Apple 🍎
           </p>
         </motion.div>
 
