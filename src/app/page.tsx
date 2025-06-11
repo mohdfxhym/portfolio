@@ -47,17 +47,11 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
     
-    // Check if user has seen loading before (optional - remove if you want loading every time)
-    const hasSeenLoading = sessionStorage.getItem('hasSeenLoading');
-    
-    if (hasSeenLoading) {
-      setShowLoading(false);
-      setShowContent(true);
-    }
+    // Always show loading screen for the Apple bootup experience
+    // Remove session storage check to ensure loading shows every time
   }, []);
 
   const handleLoadingComplete = () => {
-    sessionStorage.setItem('hasSeenLoading', 'true');
     setShowLoading(false);
     setTimeout(() => {
       setShowContent(true);
@@ -66,7 +60,11 @@ export default function Home() {
 
   // Don't render anything until mounted to avoid hydration issues
   if (!mounted) {
-    return null;
+    return (
+      <div className="fixed inset-0 bg-black flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+      </div>
+    );
   }
 
   return (

@@ -26,15 +26,15 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
   return (
     <>
-      <AppleCursor />
-      <ScrollIndicator />
-      <Navbar />
+      {mounted && (
+        <>
+          <AppleCursor />
+          <ScrollIndicator />
+          <Navbar />
+        </>
+      )}
       {children}
     </>
   );

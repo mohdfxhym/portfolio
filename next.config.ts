@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    optimizePackageImports: ['framer-motion']
+  },
+  images: {
+    domains: ['images.pexels.com'],
+  },
+  // Disable strict mode to prevent double rendering in development
+  reactStrictMode: false,
 };
 
 export default nextConfig;

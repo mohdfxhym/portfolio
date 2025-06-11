@@ -17,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} font-sans antialiased bg-appleGray text-appleBlack`}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className={`${inter.className} font-sans antialiased bg-appleGray text-appleBlack`} suppressHydrationWarning>
         <ClientLayout>
           {children}
         </ClientLayout>
