@@ -6,9 +6,9 @@ import DarkModeToggle from "./DarkModeToggle";
 const navLinks = [
   { name: "Home", href: "#" },
   { name: "Projects", href: "#projects" },
-  { name: "Achievements", href: "#achievements" },
-  { name: "Tools", href: "#tools" },
-  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Timeline", href: "#timeline" },
+  { name: "Blog", href: "#blog" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -27,7 +27,7 @@ export default function Navbar() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
-      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-3xl bg-black/20 dark:bg-white/10 backdrop-blur-xl rounded-full shadow-glass flex items-center justify-between px-4 md:px-6 py-2 border border-black/40 dark:border-white/20"
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-4xl bg-black/20 dark:bg-white/10 backdrop-blur-xl rounded-full shadow-glass flex items-center justify-between px-4 md:px-6 py-2 border border-black/40 dark:border-white/20"
     >
       {/* Enhanced Siri-style orb for mobile menu */}
       <div className="md:hidden flex items-center">
@@ -161,7 +161,7 @@ export default function Navbar() {
       </div>
 
       {/* Nav links */}
-      <ul className="hidden md:flex gap-2 sm:gap-4 md:gap-8 mx-auto">
+      <ul className="hidden md:flex gap-2 sm:gap-4 md:gap-6 mx-auto">
         {navLinks.map(link => (
           <li key={link.name}>
             <motion.a
