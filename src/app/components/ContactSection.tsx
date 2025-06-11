@@ -91,7 +91,7 @@ export default function ContactSection() {
         </button>
       </motion.form>
 
-      {/* Social Media Icons - Horizontal Layout */}
+      {/* Social Media Icons - Clean Layout Without Background */}
       <motion.div 
         className="flex justify-center items-center gap-8 mb-8"
         initial={{ opacity: 0, y: 20 }}
@@ -105,26 +105,14 @@ export default function ContactSection() {
             href={social.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-3 rounded-full bg-black/10 dark:bg-white/10 backdrop-blur-xl border border-black/20 dark:border-white/20 shadow-glass hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-200"
+            className="p-2 transition-all duration-200 hover:scale-110"
             aria-label={social.name}
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-            whileHover={{ 
-              scale: 1.1, 
-              y: -5,
-              boxShadow: "0 10px 25px rgba(0,0,0,0.15)"
-            }}
-            whileTap={{ scale: 0.95 }}
           >
-            <motion.span
-              whileHover={{ rotate: [0, -15, 15, -10, 10, 0] }}
-              transition={{ duration: 0.5 }}
-              className="inline-block"
-            >
-              {social.svg}
-            </motion.span>
+            {social.svg}
           </motion.a>
         ))}
       </motion.div>
