@@ -26,7 +26,10 @@ const greetings = [
   "مرحبا",
   "नमस्ते",
   "你好",
-  "Olá"
+  "Olá",
+  "ഹലോ", // Malayalam
+  "வணக்கம்", // Tamil
+  "నమస్కారం" // Telugu
 ];
 
 export default function HeroSection() {
@@ -70,64 +73,52 @@ export default function HeroSection() {
           </motion.h2>
         </motion.div>
 
-        {/* Main heading with large typography */}
+        {/* Main heading - Your Name with gradient */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-8 md:mb-12"
         >
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight text-black dark:text-white">
-            <motion.span
-              className="block"
-              whileHover={{ x: 10 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-            >
-              Design
-            </motion.span>
-            <motion.span
-              className="block"
-              whileHover={{ x: -10 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-            >
-              for Digital
-            </motion.span>
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight">
             <motion.span
               className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text"
-              whileHover={{ x: 15 }}
+              whileHover={{ scale: 1.05 }}
               transition={{ type: 'spring', stiffness: 300, damping: 18 }}
             >
-              Excellence
+              Mohammed
+            </motion.span>
+            <motion.span
+              className="block bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 text-transparent bg-clip-text"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+            >
+              Faheem
             </motion.span>
           </h1>
+        </motion.div>
+
+        {/* Role/Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mb-8 md:mb-12"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-black dark:text-white">
+            Designer & Developer
+          </h2>
         </motion.div>
 
         {/* Description */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-8 md:mb-12 max-w-2xl"
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="mb-12 max-w-2xl"
         >
           <p className="text-lg md:text-xl leading-relaxed text-gray-700 dark:text-gray-300">
-            I transform complex challenges into elegant digital experiences that drive results—whether you're a startup or an established business looking to innovate.
-          </p>
-        </motion.div>
-
-        {/* Name and role with gradient */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mb-12"
-        >
-          <h3 className="text-2xl md:text-3xl font-bold mb-2">
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 text-transparent bg-clip-text">
-              Mohammed Faheem
-            </span>
-          </h3>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Designer & Developer
+            Crafting elegant digital experiences with code, design, and a touch of magic. I transform complex challenges into beautiful, functional solutions that drive results.
           </p>
         </motion.div>
 
