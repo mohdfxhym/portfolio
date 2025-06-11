@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import DarkModeToggle from "./DarkModeToggle";
 
@@ -11,53 +11,6 @@ const navLinks = [
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
-
-// Siri-inspired particle component
-const SiriParticle = ({ index, isActive }: { index: number; isActive: boolean }) => {
-  const [animationValues, setAnimationValues] = useState({
-    x: 0,
-    y: 0,
-    color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.random() * 0.5 + 0.5})`
-  });
-
-  useEffect(() => {
-    if (isActive) {
-      const interval = setInterval(() => {
-        setAnimationValues({
-          x: Math.random() * 40 - 20,
-          y: Math.random() * 40 - 20,
-          color: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.random() * 0.5 + 0.5})`
-        });
-      }, 200);
-
-      return () => clearInterval(interval);
-    }
-  }, [isActive]);
-
-  return (
-    <motion.div
-      className="absolute w-1 h-1 rounded-full"
-      style={{
-        boxShadow: `0 0 20px 15px ${animationValues.color}`,
-        left: '50%',
-        top: '50%',
-      }}
-      animate={isActive ? {
-        x: animationValues.x,
-        y: animationValues.y,
-        scale: [0.5, 1.2, 0.8, 1],
-      } : {
-        x: 0,
-        y: 0,
-        scale: 0.5,
-      }}
-      transition={{
-        duration: 0.8,
-        ease: "easeInOut",
-      }}
-    />
-  );
-};
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -76,10 +29,10 @@ export default function Navbar() {
       transition={{ duration: 0.7, ease: "easeOut" }}
       className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95vw] max-w-3xl bg-black/20 dark:bg-white/10 backdrop-blur-xl rounded-full shadow-glass flex items-center justify-between px-4 md:px-6 py-2 border border-black/40 dark:border-white/20"
     >
-      {/* Siri-style orb for mobile menu */}
+      {/* Enhanced Siri-style orb for mobile menu */}
       <div className="md:hidden flex items-center">
         <button
-          className="flex items-center justify-center p-2 focus:outline-none"
+          className="flex items-center justify-center p-1 focus:outline-none"
           onClick={async () => {
             if (!menuOpen) {
               setSiriActive(true);
@@ -87,7 +40,7 @@ export default function Navbar() {
               setTimeout(() => {
                 setMenuOpen(true);
                 setSiriActive(false);
-              }, 1200); // Duration of the animation
+              }, 1500);
             } else {
               setMenuOpen(false);
             }
@@ -96,63 +49,110 @@ export default function Navbar() {
         >
           <motion.div
             animate={siriActive ? { 
-              scale: [1, 1.2, 1],
-              boxShadow: [
-                '0 0 0 0 rgba(56,189,248,0.5)',
-                '0 0 20px 10px rgba(168,85,247,0.3)',
-                '0 0 0 0 rgba(56,189,248,0.0)'
-              ] 
+              scale: [1, 1.3, 1.1, 1.2, 1],
+              rotate: [0, 180, 360],
             } : { 
-              scale: 1, 
-              boxShadow: '0 0 0 0 rgba(56,189,248,0.0)' 
+              scale: 1,
+              rotate: 0,
             }}
-            transition={{ duration: 1.2 }}
-            className="relative w-12 h-12 rounded-full flex items-center justify-center overflow-hidden"
+            transition={{ 
+              duration: siriActive ? 1.5 : 0.3,
+              ease: "easeInOut"
+            }}
+            className="relative w-14 h-14 rounded-full flex items-center justify-center overflow-hidden"
             style={{
               background: siriActive 
-                ? 'linear-gradient(45deg, rgba(56,189,248,0.3), rgba(168,85,247,0.3), rgba(244,114,182,0.3))' 
-                : 'linear-gradient(45deg, rgba(56,189,248,0.2), rgba(168,85,247,0.2))'
+                ? 'conic-gradient(from 0deg, #60A5FA, #A78BFA, #F472B6, #34D399, #FBBF24, #60A5FA)' 
+                : 'linear-gradient(135deg, rgba(96,165,250,0.3), rgba(167,139,250,0.3), rgba(244,114,182,0.2))',
+              boxShadow: siriActive 
+                ? '0 0 30px 15px rgba(96,165,250,0.3), 0 0 60px 30px rgba(167,139,250,0.2)' 
+                : '0 0 20px 8px rgba(96,165,250,0.2)'
             }}
           >
-            {/* Siri particles - only render after component has mounted */}
-            {isMounted && Array.from({ length: 12 }, (_, i) => (
-              <SiriParticle key={i} index={i} isActive={siriActive} />
+            {/* Animated particles */}
+            {isMounted && siriActive && Array.from({ length: 8 }, (_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1.5 h-1.5 rounded-full"
+                style={{
+                  background: `hsl(${i * 45}, 70%, 60%)`,
+                  left: '50%',
+                  top: '50%',
+                }}
+                animate={{
+                  x: [0, Math.cos(i * 45 * Math.PI / 180) * 25],
+                  y: [0, Math.sin(i * 45 * Math.PI / 180) * 25],
+                  scale: [0, 1.5, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  delay: i * 0.1,
+                  ease: "easeInOut"
+                }}
+              />
             ))}
             
-            {/* Central glow */}
+            {/* Central pulsing core */}
             <motion.div
-              className="absolute w-2 h-2 rounded-full"
+              className="absolute w-6 h-6 rounded-full"
               style={{
-                background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.3) 70%)',
               }}
               animate={siriActive ? {
-                scale: [1, 2, 1],
-                opacity: [0.8, 1, 0.8],
+                scale: [1, 1.8, 1.2, 1.5, 1],
+                opacity: [0.8, 1, 0.9, 1, 0.8],
               } : {
-                scale: 1,
-                opacity: 0.6,
+                scale: [1, 1.1, 1],
+                opacity: [0.6, 0.8, 0.6],
               }}
               transition={{
-                duration: 0.8,
-                repeat: siriActive ? Infinity : 0,
+                duration: siriActive ? 1.5 : 2,
+                repeat: Infinity,
                 repeatType: 'reverse',
+                ease: "easeInOut"
               }}
             />
             
-            {/* Outer ring */}
+            {/* Outer ripple rings */}
+            {Array.from({ length: 3 }, (_, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full border border-white/40"
+                style={{
+                  width: `${(i + 2) * 12}px`,
+                  height: `${(i + 2) * 12}px`,
+                }}
+                animate={siriActive ? {
+                  scale: [1, 1.5, 1.2],
+                  opacity: [0.6, 0.2, 0.4],
+                } : {
+                  scale: 1,
+                  opacity: 0.3,
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: siriActive ? Infinity : 0,
+                  delay: i * 0.2,
+                  ease: "easeOut"
+                }}
+              />
+            ))}
+
+            {/* Rotating gradient overlay */}
             <motion.div
-              className="absolute w-10 h-10 rounded-full border border-white/30"
-              animate={siriActive ? {
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              } : {
-                scale: 1,
-                opacity: 0.3,
+              className="absolute inset-0 rounded-full"
+              style={{
+                background: 'conic-gradient(from 0deg, transparent, rgba(255,255,255,0.2), transparent)',
+              }}
+              animate={{
+                rotate: siriActive ? [0, 360] : [0, 180, 360],
               }}
               transition={{
-                duration: 1,
-                repeat: siriActive ? Infinity : 0,
-                repeatType: 'reverse',
+                duration: siriActive ? 2 : 4,
+                repeat: Infinity,
+                ease: "linear"
               }}
             />
           </motion.div>
@@ -178,32 +178,76 @@ export default function Navbar() {
         ))}
       </ul>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          className="absolute top-16 left-1/2 -translate-x-1/2 w-[90vw] max-w-sm bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-2xl shadow-glass z-50 md:hidden border border-black/40 dark:border-white/20"
-        >
-          <ul className="flex flex-col items-center gap-1 py-4">
-            {navLinks.map(link => (
-              <li key={link.name} className="w-full">
-                <motion.a
-                  href={link.href}
-                  className="block w-full text-center text-white font-medium transition-colors px-6 py-3 text-lg hover:bg-white/10 rounded-lg mx-2"
-                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.1)' }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 18 }}
-                  onClick={() => setMenuOpen(false)}
+      {/* Enhanced Mobile menu with circular design */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ 
+              opacity: 0, 
+              scale: 0.3,
+              y: -20,
+            }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: 0,
+            }}
+            exit={{ 
+              opacity: 0, 
+              scale: 0.3,
+              y: -20,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 25,
+              duration: 0.4
+            }}
+            className="absolute top-20 left-1/2 -translate-x-1/2 w-80 h-80 bg-black/95 dark:bg-black/95 backdrop-blur-xl rounded-full shadow-2xl z-50 md:hidden border border-white/20 flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(circle, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.85) 100%)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(96,165,250,0.2)',
+            }}
+          >
+            <ul className="flex flex-col items-center justify-center gap-3 p-8">
+              {navLinks.map((link, index) => (
+                <motion.li 
+                  key={link.name}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    delay: index * 0.1,
+                    duration: 0.3,
+                    ease: "easeOut"
+                  }}
+                  className="w-full"
                 >
-                  {link.name}
-                </motion.a>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      )}
+                  <motion.a
+                    href={link.href}
+                    className="block w-full text-center text-white font-medium transition-all px-6 py-3 text-lg rounded-full relative overflow-hidden"
+                    whileHover={{ 
+                      scale: 1.1,
+                      backgroundColor: 'rgba(96,165,250,0.2)',
+                      boxShadow: '0 0 20px rgba(96,165,250,0.3)',
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 rounded-full"
+                      initial={{ x: '-100%' }}
+                      whileHover={{ x: '100%' }}
+                      transition={{ duration: 0.6 }}
+                    />
+                    <span className="relative z-10">{link.name}</span>
+                  </motion.a>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Dark mode toggle - only visible on desktop */}
       <div className="hidden md:block">
@@ -211,7 +255,7 @@ export default function Navbar() {
       </div>
       
       {/* Spacer for mobile to balance the layout */}
-      <div className="md:hidden w-12"></div>
+      <div className="md:hidden w-14"></div>
     </motion.nav>
   );
 }
