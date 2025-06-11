@@ -70,7 +70,6 @@ export default function StatsSection() {
             >
               <AnimatedCounter
                 target={stat.number}
-                prefix={stat.prefix}
                 suffix={stat.suffix}
               />
             </motion.div>
